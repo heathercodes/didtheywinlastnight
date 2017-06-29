@@ -15,7 +15,9 @@
 
 <script>
 
-import * as sportsApp from '../data/ajax';
+import axios from 'axios';
+
+axios.defaults.headers.common['Authorization'] = "Basic " + btoa('heather' + ":" + '1234Kobo%');
 
 const moment = require('moment');
 moment().format();
@@ -47,19 +49,49 @@ export default {
 		},
 		checkTeam: function () {
 			if (this.team === 'jays') {
-				const jaysNext = sportsApp.jaysData.getJaysNext.responseJSON;
-				this.checkNext(jaysNext);
+				axios({
+					url:'https://www.mysportsfeeds.com/api/feed/pull/mlb/latest/full_game_schedule.json',
+					method:'GET',
+					responseType:'json',
+				}).then((response) => {
+					this.checkNext(response.data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 			} else if (this.team === 'leafs') {
-				const leafsNext = sportsApp.leafsData.getLeafsNext.responseJSON;
-				this.checkNext(leafsNext);
+				axios({
+					url:'https://www.mysportsfeeds.com/api/feed/pull/nhl/latest/full_game_schedule.json',
+					method:'GET',
+					responseType: 'json'
+				}).then((response) => {
+					this.checkNext(response.data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+
 			} else if (this.team === 'raptors') {
-				const raptorsNext = sportsApp.raptorsData.getRaptorsNext.responseJSON;
-				this.checkNext(raptorsNext);
+				axios({
+					url:'https://www.mysportsfeeds.com/api/feed/pull/nba/latest/full_game_schedule.json',
+					method:'GET',
+					responseType: 'json'
+				}).then((response) => {
+					this.checkNext(response.data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 			}
 		},
 	},
 	created() {
 		this.checkTeam();
+	},
+	data() {
+		return {
+			nextGameIs: ''
+		};
 	}
 };
 

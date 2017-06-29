@@ -13,8 +13,11 @@
 
 <script>
 
-import * as sportsApp from '../data/ajax';
+import axios from 'axios';
 
+const moment = require('moment');
+moment().format();
+const yesterday = moment().add(-1, 'days').format('YYYYMMDD');
 const yep = require('../assets/yep.svg');
 const nope = require('../assets/nope.svg');
 
@@ -56,37 +59,79 @@ export default {
 		},
 		checkTeam: function () {
 			if (this.team === 'jays') {
-				const jaysResults = sportsApp.jaysData.getJaysResults.responseJSON;
 				const jaysLost = require('../assets/jays-lost.jpg');
 				const jaysLostAlt = 'Jays missing a catch because they lost, womp womp';
 				const jaysWon = require('../assets/jays-won.jpg');
 				const jaysWonAlt = 'sad looking Jays because we are sad there are more games';
 				const AnswerComment = 'I\'m so sorry, they won (it means more people on that bandwagon)';
 
-				this.displayResult(jaysResults, jaysWon, jaysWonAlt, jaysLost,jaysLostAlt, AnswerComment);
+				axios({
+					url:'https://www.mysportsfeeds.com/api/feed/pull/mlb/latest/scoreboard.json',
+					params: {
+						fordate: yesterday,
+					},
+					method:'GET',
+					responseType: 'json'
+				}).then((response) => {
+					this.displayResult(response.data, jaysWon, jaysWonAlt, jaysLost,jaysLostAlt, AnswerComment);
+				}).catch((err) => {
+					console.log(err);
+				});
+				
 			} else if (this.team === 'leafs') {
-				const leafsResults = sportsApp.leafsData.getLeafsResults.responseJSON;
 				const leafsLost = require('../assets/leafs-lost.jpg');
 				const leafsLostAlt = 'Leaf missing the puck because they lost, womp womp';
 				const leafsWon = require('../assets/leafs-won.jpg');
 				const leafsWonAlt = 'sad looking Leafs because we are sad there are more games';
 				const AnswerComment = 'I\'m so sorry, they won (this is so rare, everyone will be talking about it)';
 
-				this.displayResult(leafsResults, leafsWon, leafsWonAlt,leafsLost,leafsLostAlt,AnswerComment);
+				axios({
+					url:'https://www.mysportsfeeds.com/api/feed/pull/nhl/latest/scoreboard.json',
+					params: {
+						fordate: yesterday,
+					},
+					method:'GET',
+					responseType: 'json'
+				}).then((response) => {
+					this.displayResult(response.data, leafsWon, leafsWonAlt,leafsLost,leafsLostAlt,AnswerComment);
+				}).catch((err) => {
+					console.log(err);
+				});
+
 			} else if (this.team === 'raptors') {
-				const raptorsResults = sportsApp.raptorsData.getRaptorsResults.responseJSON;
 				const raptorsLost = require('../assets/raptors-lost.jpg');
 				const raptorsLostAlt = 'Raptors missing the ball because they lost, womp womp';
 				const raptorsWon = require('../assets/raptors-won.jpg');
 				const raptorsWonAlt = 'sad looking Raptors because we are sad there are more games';
 				const AnswerComment = 'I\'m so sorry, they won (maybe you can talk about Drake at least?)';
 
-				this.displayResult(raptorsResults, raptorsWon, raptorsWonAlt,raptorsLost,raptorsLostAlt, AnswerComment);
+				axios({
+					url:'https://www.mysportsfeeds.com/api/feed/pull/nba/latest/scoreboard.json',
+					params: {
+						fordate: yesterday,
+					},
+					method:'GET',
+					responseType: 'json'
+				}).then((response) => {
+					this.displayResult(response.data, raptorsWon, raptorsWonAlt,raptorsLost,raptorsLostAlt, AnswerComment);
+				}).catch((err) => {
+					console.log(err);
+				});
 			}
 		},
 	},
 	created() {
 		this.checkTeam();
+	},
+	data() {
+		return {
+			answer: '',
+			TheAnswer: '',
+			AnswerComment: '',
+			answerAlt: '',
+			image: '',
+			imageAlt: '',
+		};
 	}
 };
 

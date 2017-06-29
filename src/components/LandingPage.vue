@@ -25,7 +25,11 @@
 import GameTrue from '../components/GameTrue';
 import GameFalse from '../components/GameFalse';
 import Other from '../components/Other';
-import * as sportsApp from '../data/ajax';
+import axios from 'axios';
+
+const moment = require('moment');
+moment().format();
+const yesterday = moment().add(-1, 'days').format('YYYYMMDD');
 
 export default {
   components: {
@@ -45,16 +49,46 @@ export default {
     },
     checkTeam: function(team) {
       if (team === 'jays') {
-        const jaysResults = sportsApp.jaysData.getJaysResults.responseJSON;
-        this.checkGame(jaysResults);
+        axios({
+          url:'https://www.mysportsfeeds.com/api/feed/pull/mlb/latest/scoreboard.json',
+          params: {
+            fordate: yesterday,
+          },
+          method:'GET',
+          responseType: 'json'
+        }).then((response) => {
+          this.checkGame(response.data);
+        }).catch((err) => {
+          console.log(err);
+        });
 
       } else if (team === 'leafs') {
-        const leafsResults = sportsApp.leafsData.getLeafsResults.responseJSON;
-        this.checkGame(leafsResults);
+        axios({
+          url:'https://www.mysportsfeeds.com/api/feed/pull/nhl/latest/scoreboard.json',
+          params: {
+            fordate: yesterday,
+          },
+          method:'GET',
+          responseType: 'json'
+        }).then((response) => {
+          this.checkGame(response.data);
+        }).catch((err) => {
+          console.log(err);
+        });
 
       } else if (team === 'raptors') {
-        const raptorsResults = sportsApp.raptorsData.getRaptorsResults.responseJSON;
-        this.checkGame(raptorsResults);
+        axios({
+          url:'https://www.mysportsfeeds.com/api/feed/pull/nba/latest/scoreboard.json',
+          params: {
+            fordate: yesterday,
+          },
+          method:'GET',
+          responseType: 'json'
+        }).then((response) => {
+          this.checkGame(response.data);
+        }).catch((err) => {
+          console.log(err);
+        });
       }
     },
     checkGame: function(team) {
@@ -83,6 +117,7 @@ export default {
       other: false,
       hide: true,
       team: this.selected,
+      selected: '',
     };
   },
 };

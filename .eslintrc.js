@@ -62,6 +62,9 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'max-len': 'off',
     'global-require': 'off',
+    'no-useless-concat': 'off',
+    'dot-notation': 'off',
+    'quote-props': 'off',
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       'js': 'never',

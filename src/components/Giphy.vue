@@ -15,6 +15,9 @@
 
 import * as sportsApp from '../data/ajax';
 
+import axios from 'axios';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 export default {
 	props: [
 		'team'
@@ -22,9 +25,24 @@ export default {
 	methods: {
 		checkTeam: function() {
 			if (this.team === 'jays') {
-				const gifs = sportsApp.jaysData.getJaysGifs.responseJSON.data;
-				this.gifs = gifs;
-				this.text = 'Jays Gifs';
+				axios({
+					url:'http://api.giphy.com/v1/gifs/search',
+					// method:'GET',
+					// responseType:'json',
+					params: {
+						api_key: 'cc1dabd9cfcb404aa0610a65fe90c441',
+						q: 'toronto+blue+jays',
+						limit: 9,
+						fmt: 'json'
+					}
+				}).then((response) => {
+					// console.log(response);
+					this.gifs = response.data;
+					this.text = 'Jays Gifs';
+				}).catch((err) => {
+					console.log(err.response);
+				});
+
 			} else if (this.team === 'leafs') {
 				const gifs = sportsApp.leafsData.getLeafsGifs.responseJSON.data;
 				this.gifs = gifs;
@@ -38,6 +56,12 @@ export default {
 	},
 	created() {
 		this.checkTeam();
+	},
+	data() {
+		return {
+			gifs: '',
+			text: ''
+		};
 	}
 };
 
