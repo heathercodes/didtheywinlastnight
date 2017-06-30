@@ -4,7 +4,7 @@
 			<h3>Quick Take</h3>
 				<ul class="gifContainer">
 					<li v-for="gif in gifs">
-						<img :src="gif.images.downsized_small.url" :alt="text">
+						<img :src="gif.images.downsized.url" :alt="text">
 					</li>
 				</ul>
 		</section>
@@ -13,10 +13,7 @@
 
 <script>
 
-import * as sportsApp from '../data/ajax';
-
-import axios from 'axios';
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+import $ from 'jquery';
 
 export default {
 	props: [
@@ -25,32 +22,54 @@ export default {
 	methods: {
 		checkTeam: function() {
 			if (this.team === 'jays') {
-				axios({
-					url:'http://api.giphy.com/v1/gifs/search',
-					// method:'GET',
-					// responseType:'json',
-					params: {
-						api_key: 'cc1dabd9cfcb404aa0610a65fe90c441',
-						q: 'toronto+blue+jays',
-						limit: 9,
-						fmt: 'json'
+				$.ajax({
+					url:'http://api.giphy.com/v1/gifs/search?q=toronto+blue+jays&api_key=cc1dabd9cfcb404aa0610a65fe90c441',
+					method:'GET',
+					responseType:'json',
+					data: {
+						limit:9,
+						sort:'recent'
 					}
-				}).then((response) => {
-					// console.log(response);
+				})
+				.then((response) => {
 					this.gifs = response.data;
 					this.text = 'Jays Gifs';
 				}).catch((err) => {
-					console.log(err.response);
+					console.log(err);
 				});
 
 			} else if (this.team === 'leafs') {
-				const gifs = sportsApp.leafsData.getLeafsGifs.responseJSON.data;
-				this.gifs = gifs;
-				this.text = 'Leafs Gifs';
+				$.ajax({
+					url:'http://api.giphy.com/v1/gifs/search?q=toronto+maple+leafs&api_key=cc1dabd9cfcb404aa0610a65fe90c441',
+					method:'GET',
+					dataType:'json',
+					data: {
+						limit:9,
+						sort:'recent'
+					}
+				})
+				.then((response) => {
+					this.gifs = response.data;
+					this.text = 'Leafs Gifs';
+				}).catch((err) => {
+					console.log(err);
+				});
 			} else if (this.team === 'raptors') {
-				const gifs = sportsApp.raptorsData.getRaptorsGifs.responseJSON.data;
-				this.gifs = gifs;
-				this.text = 'Raptors Gifs';
+				$.ajax({
+					url:'http://api.giphy.com/v1/gifs/search?q=toronto+raptors&api_key=cc1dabd9cfcb404aa0610a65fe90c441',
+					method:'GET',
+					dataType:'json',
+					params: {
+						limit:9,
+						sort:'recent'
+					}
+				})
+				.then((response) => {
+					this.gifs = response.data;
+					this.text = 'Raptors Gifs';
+				}).catch((err) => {
+					console.log(err);
+				});
 			}
 		},
 	},

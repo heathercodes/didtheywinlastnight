@@ -31,12 +31,12 @@ export default {
 				return game.game.awayTeam.City === 'Toronto' || game.game.homeTeam.City === 'Toronto';
 			});
 
+			console.log(JSONresult);
+
 			const awayScore = parseInt(JSONresult[0].awayScore);
 			const homeScore = parseInt(JSONresult[0].homeScore);
 
-			const filter = team.scoreboard.gameScore;
-
-			if (filter[0].game.homeTeam.City === 'Toronto' && homeScore > awayScore || filter[0].game.awayTeam.City === 'Toronto' && awayScore > homeScore) {
+			if (JSONresult[0].game.homeTeam.City === 'Toronto' && homeScore > awayScore || JSONresult[0].game.awayTeam.City === 'Toronto' && awayScore > homeScore) {
 
 				this.answer = yep;
 				this.answerAlt = 'Yep, they won';
