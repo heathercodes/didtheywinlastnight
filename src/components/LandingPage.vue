@@ -12,6 +12,8 @@
       <input type="submit" value="So what happened last night?">
     </form>
 
+    <Preloader v-if="preload"></Preloader>
+
     <GameTrue v-if="GameTrue" :team="selected"></GameTrue>
 
     <GameFalse v-if="GameFalse"></GameFalse>
@@ -25,6 +27,7 @@
 import GameTrue from '../components/GameTrue';
 import GameFalse from '../components/GameFalse';
 import Other from '../components/Other';
+import Preloader from './Preloader';
 import axios from 'axios';
 
 const moment = require('moment');
@@ -36,11 +39,13 @@ export default {
     GameFalse,
     GameTrue,
     Other,
+    Preloader,
   },
 	methods: {
     onSubmit: function(){
       const selection = this.selected;
       this.hide = false;
+      this.preload = true;
       if (selection === 'other') {
         this.other = true;
       } else {

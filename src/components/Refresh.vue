@@ -9,6 +9,7 @@ export default {
 		refresh: function () {
 			window.location.reload();
 			this.$router.push('/');
+			window.scrollTo(0, 0);
 		},
 	},
 };

@@ -6,6 +6,7 @@
       <LandingPage></LandingPage>
 
       <FooterUI></FooterUI>
+
   </main>
 </template>
 
