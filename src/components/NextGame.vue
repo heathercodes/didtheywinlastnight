@@ -17,8 +17,6 @@
 
 import axios from 'axios';
 
-axios.defaults.headers.common['Authorization'] = "Basic " + btoa('heather' + ":" + '1234Kobo%');
-
 const moment = require('moment');
 moment().format();
 const today = moment().format('YYYY-MM-DD');
@@ -52,6 +50,10 @@ export default {
 				axios({
 					url:'https://www.mysportsfeeds.com/api/feed/pull/mlb/latest/full_game_schedule.json',
 					method:'GET',
+					auth: {
+					  username: 'heather',
+					  password: '1234Kobo%'
+					},
 					responseType:'json',
 				}).then((response) => {
 					this.checkNext(response.data);
@@ -63,6 +65,10 @@ export default {
 				axios({
 					url:'https://www.mysportsfeeds.com/api/feed/pull/nhl/latest/full_game_schedule.json',
 					method:'GET',
+					auth: {
+					  username: 'heather',
+					  password: '1234Kobo%'
+					},
 					responseType: 'json'
 				}).then((response) => {
 					this.checkNext(response.data);
@@ -75,6 +81,10 @@ export default {
 				axios({
 					url:'https://www.mysportsfeeds.com/api/feed/pull/nba/latest/full_game_schedule.json',
 					method:'GET',
+					auth: {
+					  username: 'heather',
+					  password: '1234Kobo%'
+					},
 					responseType: 'json'
 				}).then((response) => {
 					this.checkNext(response.data);

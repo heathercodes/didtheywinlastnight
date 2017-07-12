@@ -59,6 +59,10 @@ export default {
           params: {
             fordate: yesterday,
           },
+          auth: {
+            username: 'heather',
+            password: '1234Kobo%'
+          },
           method:'GET',
           responseType: 'json'
         }).then((response) => {
@@ -73,6 +77,10 @@ export default {
           params: {
             fordate: yesterday,
           },
+          auth: {
+            username: 'heather',
+            password: '1234Kobo%'
+          },
           method:'GET',
           responseType: 'json'
         }).then((response) => {
@@ -86,6 +94,10 @@ export default {
           url:'https://www.mysportsfeeds.com/api/feed/pull/nba/latest/scoreboard.json',
           params: {
             fordate: yesterday,
+          },
+          auth: {
+            username: 'heather',
+            password: '1234Kobo%'
           },
           method:'GET',
           responseType: 'json'
@@ -123,6 +135,7 @@ export default {
       hide: true,
       team: this.selected,
       selected: '',
+      preload: false,
     };
   },
 };

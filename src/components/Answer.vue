@@ -31,8 +31,6 @@ export default {
 				return game.game.awayTeam.City === 'Toronto' || game.game.homeTeam.City === 'Toronto';
 			});
 
-			console.log(JSONresult);
-
 			const awayScore = parseInt(JSONresult[0].awayScore);
 			const homeScore = parseInt(JSONresult[0].homeScore);
 
@@ -70,6 +68,10 @@ export default {
 					params: {
 						fordate: yesterday,
 					},
+					auth: {
+					  username: 'heather',
+					  password: '1234Kobo%'
+					},
 					method:'GET',
 					responseType: 'json'
 				}).then((response) => {
@@ -90,6 +92,10 @@ export default {
 					params: {
 						fordate: yesterday,
 					},
+					auth: {
+					  username: 'heather',
+					  password: '1234Kobo%'
+					},
 					method:'GET',
 					responseType: 'json'
 				}).then((response) => {
@@ -109,6 +115,10 @@ export default {
 					url:'https://www.mysportsfeeds.com/api/feed/pull/nba/latest/scoreboard.json',
 					params: {
 						fordate: yesterday,
+					},
+					auth: {
+					  username: 'heather',
+					  password: '1234Kobo%'
 					},
 					method:'GET',
 					responseType: 'json'

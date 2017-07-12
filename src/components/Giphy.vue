@@ -13,7 +13,7 @@
 
 <script>
 
-import $ from 'jquery';
+import axios from 'axios';
 
 export default {
 	props: [
@@ -22,32 +22,15 @@ export default {
 	methods: {
 		checkTeam: function() {
 			if (this.team === 'jays') {
-				$.ajax({
-					url:'http://api.giphy.com/v1/gifs/search?q=toronto+blue+jays&api_key=cc1dabd9cfcb404aa0610a65fe90c441',
-					method:'GET',
-					responseType:'json',
-					data: {
-						limit:9,
-						sort:'recent'
-					}
-				})
+				axios.get('https://api.giphy.com/v1/gifs/search?api_key=cc1dabd9cfcb404aa0610a65fe90c441&q=Toronto+Blue+Jays&limit=9&offset=0&rating=G&lang=en')
 				.then((response) => {
-					this.gifs = response.data;
+					this.gifs = response.data.data;
 					this.text = 'Jays Gifs';
 				}).catch((err) => {
 					console.log(err);
 				});
-
 			} else if (this.team === 'leafs') {
-				$.ajax({
-					url:'http://api.giphy.com/v1/gifs/search?q=toronto+maple+leafs&api_key=cc1dabd9cfcb404aa0610a65fe90c441',
-					method:'GET',
-					dataType:'json',
-					data: {
-						limit:9,
-						sort:'recent'
-					}
-				})
+				axios.get('http://api.giphy.com/v1/gifs/search?q=toronto+maple+leafs&api_key=cc1dabd9cfcb404aa0610a65fe90c441&limit=9&offset=0&rating=G&lang=en')
 				.then((response) => {
 					this.gifs = response.data;
 					this.text = 'Leafs Gifs';
@@ -55,15 +38,7 @@ export default {
 					console.log(err);
 				});
 			} else if (this.team === 'raptors') {
-				$.ajax({
-					url:'http://api.giphy.com/v1/gifs/search?q=toronto+raptors&api_key=cc1dabd9cfcb404aa0610a65fe90c441',
-					method:'GET',
-					dataType:'json',
-					params: {
-						limit:9,
-						sort:'recent'
-					}
-				})
+				axios.get('http://api.giphy.com/v1/gifs/search?q=toronto+raptors&api_key=cc1dabd9cfcb404aa0610a65fe90c441&limit=9&offset=0&rating=G&lang=en')
 				.then((response) => {
 					this.gifs = response.data;
 					this.text = 'Raptors Gifs';
