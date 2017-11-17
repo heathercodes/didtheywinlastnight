@@ -24,15 +24,11 @@
 
 <script>
 
+import { gameCheck } from '../js/api';
 import GameTrue from '../components/GameTrue';
 import GameFalse from '../components/GameFalse';
 import Other from '../components/Other';
 import Preloader from './Preloader';
-import axios from 'axios';
-
-const moment = require('moment');
-moment().format();
-const yesterday = moment().add(-1, 'days').format('YYYYMMDD');
 
 export default {
   components: {
@@ -54,58 +50,14 @@ export default {
     },
     checkTeam: function(team) {
       if (team === 'jays') {
-        axios({
-          url:'https://www.mysportsfeeds.com/api/feed/pull/mlb/latest/scoreboard.json',
-          params: {
-            fordate: yesterday,
-          },
-          auth: {
-            username: 'heather',
-            password: '1234Kobo%'
-          },
-          method:'GET',
-          responseType: 'json'
-        }).then((response) => {
-          this.checkGame(response.data);
-        }).catch((err) => {
-          console.log(err);
-        });
+        gameCheck('/mlb/latest/scoreboard.json', this.checkGame);
 
       } else if (team === 'leafs') {
-        axios({
-          url:'https://www.mysportsfeeds.com/api/feed/pull/nhl/latest/scoreboard.json',
-          params: {
-            fordate: yesterday,
-          },
-          auth: {
-            username: 'heather',
-            password: '1234Kobo%'
-          },
-          method:'GET',
-          responseType: 'json'
-        }).then((response) => {
-          this.checkGame(response.data);
-        }).catch((err) => {
-          console.log(err);
-        });
-
+        gameCheck('/nhl/latest/scoreboard.json', this.checkGame);
+        
       } else if (team === 'raptors') {
-        axios({
-          url:'https://www.mysportsfeeds.com/api/feed/pull/nba/latest/scoreboard.json',
-          params: {
-            fordate: yesterday,
-          },
-          auth: {
-            username: 'heather',
-            password: '1234Kobo%'
-          },
-          method:'GET',
-          responseType: 'json'
-        }).then((response) => {
-          this.checkGame(response.data);
-        }).catch((err) => {
-          console.log(err);
-        });
+        gameCheck('/nba/latest/scoreboard.json', this.checkGame);
+
       }
     },
     checkGame: function(team) {

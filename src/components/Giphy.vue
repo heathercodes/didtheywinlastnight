@@ -4,7 +4,7 @@
 			<h3>Quick Take</h3>
 				<ul class="gifContainer">
 					<li v-for="gif in gifs">
-						<img :src="gif.images.downsized.url" :alt="text">
+						<img :src="gif.images.downsized.url">
 					</li>
 				</ul>
 		</section>
@@ -13,38 +13,25 @@
 
 <script>
 
-import axios from 'axios';
+import { giphyCheck } from '../js/api';
 
 export default {
 	props: [
 		'team'
 	],
 	methods: {
+		assignGifs: function(gify) {
+			this.gifs = gify;
+		},
 		checkTeam: function() {
 			if (this.team === 'jays') {
-				axios.get('https://api.giphy.com/v1/gifs/search?api_key=cc1dabd9cfcb404aa0610a65fe90c441&q=Toronto+Blue+Jays&limit=9&offset=0&rating=G&lang=en')
-				.then((response) => {
-					this.gifs = response.data.data;
-					this.text = 'Jays Gifs';
-				}).catch((err) => {
-					console.log(err);
-				});
+				giphyCheck('Toronto+Blue+Jays', this.assignGifs);
+
 			} else if (this.team === 'leafs') {
-				axios.get('http://api.giphy.com/v1/gifs/search?q=toronto+maple+leafs&api_key=cc1dabd9cfcb404aa0610a65fe90c441&limit=9&offset=0&rating=G&lang=en')
-				.then((response) => {
-					this.gifs = response.data;
-					this.text = 'Leafs Gifs';
-				}).catch((err) => {
-					console.log(err);
-				});
+				giphyCheck('toronto+maple+leafs', this.assignGifs);
+
 			} else if (this.team === 'raptors') {
-				axios.get('http://api.giphy.com/v1/gifs/search?q=toronto+raptors&api_key=cc1dabd9cfcb404aa0610a65fe90c441&limit=9&offset=0&rating=G&lang=en')
-				.then((response) => {
-					this.gifs = response.data;
-					this.text = 'Raptors Gifs';
-				}).catch((err) => {
-					console.log(err);
-				});
+				giphyCheck('toronto+raptors', this.assignGifs);
 			}
 		},
 	},
@@ -53,8 +40,7 @@ export default {
 	},
 	data() {
 		return {
-			gifs: '',
-			text: ''
+			gifs: ''
 		};
 	}
 };

@@ -15,12 +15,13 @@
 
 <script>
 
-import axios from 'axios';
-
-const moment = require('moment');
+import { scheduleCheck } from '../js/api';
+import moment from "moment";
 moment().format();
-const today = moment().format('YYYY-MM-DD');
-const tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
+const today = moment().format("YYYY-MM-DD");
+const tomorrow = moment()
+  .add(1, "days")
+  .format("YYYY-MM-DD");
 
 export default {
 	props: [
@@ -43,55 +44,16 @@ export default {
 			} else {
 				this.nextGameIs = 'Thankfully, not today';
 			}
-
 		},
 		checkTeam: function () {
 			if (this.team === 'jays') {
-				axios({
-					url:'https://www.mysportsfeeds.com/api/feed/pull/mlb/latest/full_game_schedule.json',
-					method:'GET',
-					auth: {
-					  username: 'heather',
-					  password: '1234Kobo%'
-					},
-					responseType:'json',
-				}).then((response) => {
-					this.checkNext(response.data);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+				scheduleCheck('/mlb/latest/full_game_schedule.json', this.checkNext);
+
 			} else if (this.team === 'leafs') {
-				axios({
-					url:'https://www.mysportsfeeds.com/api/feed/pull/nhl/latest/full_game_schedule.json',
-					method:'GET',
-					auth: {
-					  username: 'heather',
-					  password: '1234Kobo%'
-					},
-					responseType: 'json'
-				}).then((response) => {
-					this.checkNext(response.data);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+				scheduleCheck('/nhl/latest/full_game_schedule.json', this.checkNext);
 
 			} else if (this.team === 'raptors') {
-				axios({
-					url:'https://www.mysportsfeeds.com/api/feed/pull/nba/latest/full_game_schedule.json',
-					method:'GET',
-					auth: {
-					  username: 'heather',
-					  password: '1234Kobo%'
-					},
-					responseType: 'json'
-				}).then((response) => {
-					this.checkNext(response.data);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+				scheduleCheck('/nba/latest/full_game_schedule.json', this.checkNext);
 			}
 		},
 	},

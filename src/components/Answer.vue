@@ -13,11 +13,8 @@
 
 <script>
 
-import axios from 'axios';
+import { scoreCheck } from '../js/api';
 
-const moment = require('moment');
-moment().format();
-const yesterday = moment().add(-1, 'days').format('YYYYMMDD');
 const yep = require('../assets/yep.svg');
 const nope = require('../assets/nope.svg');
 
@@ -57,76 +54,31 @@ export default {
 		},
 		checkTeam: function () {
 			if (this.team === 'jays') {
-				const jaysLost = require('../assets/jays-lost.jpg');
-				const jaysLostAlt = 'Jays missing a catch because they lost, womp womp';
-				const jaysWon = require('../assets/jays-won.jpg');
-				const jaysWonAlt = 'sad looking Jays because we are sad there are more games';
-				const AnswerComment = 'I\'m so sorry, they won (it means more people on that bandwagon)';
+				const lost = require('../assets/jays-lost.jpg');
+				const lostAlt = 'Jays missing a catch because they lost, womp womp';
+				const won = require('../assets/jays-won.jpg');
+				const wonAlt = 'sad looking Jays because we are sad there are more games';
+				const answerComment = 'I\'m so sorry, they won (it means more people on that bandwagon)';
 
-				axios({
-					url:'https://www.mysportsfeeds.com/api/feed/pull/mlb/latest/scoreboard.json',
-					params: {
-						fordate: yesterday,
-					},
-					auth: {
-					  username: 'heather',
-					  password: '1234Kobo%'
-					},
-					method:'GET',
-					responseType: 'json'
-				}).then((response) => {
-					this.displayResult(response.data, jaysWon, jaysWonAlt, jaysLost,jaysLostAlt, AnswerComment);
-				}).catch((err) => {
-					console.log(err);
-				});
+				scoreCheck('/mlb/latest/scoreboard.json', won, wonAlt, lost, lostAlt, answerComment, this.displayResult);
 				
 			} else if (this.team === 'leafs') {
-				const leafsLost = require('../assets/leafs-lost.jpg');
-				const leafsLostAlt = 'Leaf missing the puck because they lost, womp womp';
-				const leafsWon = require('../assets/leafs-won.jpg');
-				const leafsWonAlt = 'sad looking Leafs because we are sad there are more games';
-				const AnswerComment = 'I\'m so sorry, they won (this is so rare, everyone will be talking about it)';
+				const lost = require('../assets/leafs-lost.jpg');
+				const lostAlt = 'Leaf missing the puck because they lost, womp womp';
+				const won = require('../assets/leafs-won.jpg');
+				const wonAlt = 'sad looking Leafs because we are sad there are more games';
+				const answerComment = 'I\'m so sorry, they won (this is so rare, everyone will be talking about it)';
 
-				axios({
-					url:'https://www.mysportsfeeds.com/api/feed/pull/nhl/latest/scoreboard.json',
-					params: {
-						fordate: yesterday,
-					},
-					auth: {
-					  username: 'heather',
-					  password: '1234Kobo%'
-					},
-					method:'GET',
-					responseType: 'json'
-				}).then((response) => {
-					this.displayResult(response.data, leafsWon, leafsWonAlt,leafsLost,leafsLostAlt,AnswerComment);
-				}).catch((err) => {
-					console.log(err);
-				});
+				scoreCheck('/nhl/latest/scoreboard.json', won, wonAlt, lost, lostAlt, answerComment, this.displayResult);
 
 			} else if (this.team === 'raptors') {
-				const raptorsLost = require('../assets/raptors-lost.jpg');
-				const raptorsLostAlt = 'Raptors missing the ball because they lost, womp womp';
-				const raptorsWon = require('../assets/raptors-won.jpg');
-				const raptorsWonAlt = 'sad looking Raptors because we are sad there are more games';
-				const AnswerComment = 'I\'m so sorry, they won (maybe you can talk about Drake at least?)';
+				const lost = require('../assets/raptors-lost.jpg');
+				const lostAlt = 'Raptors missing the ball because they lost, womp womp';
+				const won = require('../assets/raptors-won.jpg');
+				const wonAlt = 'sad looking Raptors because we are sad there are more games';
+				const answerComment = 'I\'m so sorry, they won (maybe you can talk about Drake at least?)';
 
-				axios({
-					url:'https://www.mysportsfeeds.com/api/feed/pull/nba/latest/scoreboard.json',
-					params: {
-						fordate: yesterday,
-					},
-					auth: {
-					  username: 'heather',
-					  password: '1234Kobo%'
-					},
-					method:'GET',
-					responseType: 'json'
-				}).then((response) => {
-					this.displayResult(response.data, raptorsWon, raptorsWonAlt,raptorsLost,raptorsLostAlt, AnswerComment);
-				}).catch((err) => {
-					console.log(err);
-				});
+				scoreCheck('/nba/latest/scoreboard.json', won, wonAlt, lost, lostAlt, answerComment, this.displayResult);
 			}
 		},
 	},

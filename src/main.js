@@ -15,11 +15,3 @@ new Vue({
   template: '<App/>',
   components: { App },
 });
-
-// window.sr = ScrollReveal({
-// 		origin: 'right',
-// 		duration: 900,
-// 		distance:'10rem',
-// 	});
-// sr.reveal('.foo');
-// sr.reveal('.bar');

@@ -1,6 +1,6 @@
 <template>
   <main id="home">
-    <!-- <div class="preloader"></div> -->
+
       <HeaderUI></HeaderUI>
 
       <LandingPage></LandingPage>
