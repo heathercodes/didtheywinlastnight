@@ -46,14 +46,21 @@ export default {
 			}
 		},
 		checkTeam: function () {
-			if (this.team === 'jays') {
-				scheduleCheck('/mlb/latest/full_game_schedule.json', this.checkNext);
+			switch (this.team) {
+				case 'jays':
+					scheduleCheck('/mlb/latest/full_game_schedule.json', this.checkNext);
+					break;
+				
+				case 'leafs':
+					scheduleCheck('/nhl/latest/full_game_schedule.json', this.checkNext);
+					break;
 
-			} else if (this.team === 'leafs') {
-				scheduleCheck('/nhl/latest/full_game_schedule.json', this.checkNext);
+				case 'raptors':
+					scheduleCheck('/nba/latest/full_game_schedule.json', this.checkNext);
+					break;
 
-			} else if (this.team === 'raptors') {
-				scheduleCheck('/nba/latest/full_game_schedule.json', this.checkNext);
+				default:
+					console.log('the code broke because my cat walked across the keyboard.');
 			}
 		},
 	},

@@ -53,32 +53,49 @@ export default {
 			}
 		},
 		checkTeam: function () {
-			if (this.team === 'jays') {
-				const lost = require('../assets/jays-lost.jpg');
-				const lostAlt = 'Jays missing a catch because they lost, womp womp';
-				const won = require('../assets/jays-won.jpg');
-				const wonAlt = 'sad looking Jays because we are sad there are more games';
-				const answerComment = 'I\'m so sorry, they won (it means more people on that bandwagon)';
+			let lost;
+			let lostAlt;
+			let won;
+			let wonAlt;
+			let answerComment;
 
-				scoreCheck('/mlb/latest/scoreboard.json', won, wonAlt, lost, lostAlt, answerComment, this.displayResult);
+			switch (this.team) {
+				case 'jays':
+					lost = require('../assets/jays-lost.jpg');
+					lostAlt = 'Jays missing a catch because they lost, womp womp';
+					won = require('../assets/jays-won.jpg');
+					wonAlt = 'sad looking Jays because we are sad there are more games';
+					answerComment = 'I\'m so sorry, they won (it means more people on that bandwagon)';
+
+					scoreCheck('/mlb/latest/scoreboard.json', won, wonAlt, lost, lostAlt, answerComment, this.displayResult);
+
+					break;
 				
-			} else if (this.team === 'leafs') {
-				const lost = require('../assets/leafs-lost.jpg');
-				const lostAlt = 'Leaf missing the puck because they lost, womp womp';
-				const won = require('../assets/leafs-won.jpg');
-				const wonAlt = 'sad looking Leafs because we are sad there are more games';
-				const answerComment = 'I\'m so sorry, they won (this is so rare, everyone will be talking about it)';
+				case 'leafs':
+					lost = require('../assets/leafs-lost.jpg');
+					lostAlt = 'Leaf missing the puck because they lost, womp womp';
+					won = require('../assets/leafs-won.jpg');
+					wonAlt = 'sad looking Leafs because we are sad there are more games';
+					answerComment = 'I\'m so sorry, they won (this is so rare, everyone will be talking about it)';
 
-				scoreCheck('/nhl/latest/scoreboard.json', won, wonAlt, lost, lostAlt, answerComment, this.displayResult);
+					scoreCheck('/nhl/latest/scoreboard.json', won, wonAlt, lost, lostAlt, answerComment, this.displayResult);
 
-			} else if (this.team === 'raptors') {
-				const lost = require('../assets/raptors-lost.jpg');
-				const lostAlt = 'Raptors missing the ball because they lost, womp womp';
-				const won = require('../assets/raptors-won.jpg');
-				const wonAlt = 'sad looking Raptors because we are sad there are more games';
-				const answerComment = 'I\'m so sorry, they won (maybe you can talk about Drake at least?)';
+					break;
+				
+				case 'raptors':
+					lost = require('../assets/raptors-lost.jpg');
+					lostAlt = 'Raptors missing the ball because they lost, womp womp';
+					won = require('../assets/raptors-won.jpg');
+					wonAlt = 'sad looking Raptors because we are sad there are more games';
+					answerComment = 'I\'m so sorry, they won (maybe you can talk about Drake at least?)';
 
-				scoreCheck('/nba/latest/scoreboard.json', won, wonAlt, lost, lostAlt, answerComment, this.displayResult);
+					scoreCheck('/nba/latest/scoreboard.json', won, wonAlt, lost, lostAlt, answerComment, this.displayResult);
+
+					break;
+
+				default:
+					console.log('Heather, there is an error in your code. Please shame her.');
+
 			}
 		},
 	},

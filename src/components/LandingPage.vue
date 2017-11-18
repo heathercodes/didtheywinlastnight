@@ -25,6 +25,7 @@
 <script>
 
 import { gameCheck } from '../js/api';
+
 import GameTrue from '../components/GameTrue';
 import GameFalse from '../components/GameFalse';
 import Other from '../components/Other';
@@ -42,22 +43,24 @@ export default {
       const selection = this.selected;
       this.hide = false;
       this.preload = true;
-      if (selection === 'other') {
-        this.other = true;
-      } else {
-        this.checkTeam(selection);
-      }
+      this.checkTeam(selection);
     },
     checkTeam: function(team) {
-      if (team === 'jays') {
-        gameCheck('/mlb/latest/scoreboard.json', this.checkGame);
-
-      } else if (team === 'leafs') {
-        gameCheck('/nhl/latest/scoreboard.json', this.checkGame);
-        
-      } else if (team === 'raptors') {
-        gameCheck('/nba/latest/scoreboard.json', this.checkGame);
-
+      switch (team) {
+        case 'jays':
+          gameCheck('/mlb/latest/scoreboard.json', this.checkGame);
+          break;
+        case 'leafs':
+          gameCheck('/nhl/latest/scoreboard.json', this.checkGame);
+          break;
+        case 'raptors':
+          gameCheck('/nba/latest/scoreboard.json', this.checkGame);
+          break;
+        case 'other':
+          this.other = true;
+          break;
+        default:
+          console.log('There is an error. My bad');
       }
     },
     checkGame: function(team) {

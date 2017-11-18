@@ -24,14 +24,21 @@ export default {
 			this.gifs = gify;
 		},
 		checkTeam: function() {
-			if (this.team === 'jays') {
-				giphyCheck('Toronto+Blue+Jays', this.assignGifs);
-
-			} else if (this.team === 'leafs') {
-				giphyCheck('toronto+maple+leafs', this.assignGifs);
-
-			} else if (this.team === 'raptors') {
-				giphyCheck('toronto+raptors', this.assignGifs);
+			switch (this.team) {
+				case 'jays':
+					giphyCheck('Toronto+Blue+Jays', this.assignGifs);
+					break;
+				
+				case 'leafs':
+					giphyCheck('toronto+maple+leafs', this.assignGifs);
+					break;
+				
+				case 'raptors':
+					giphyCheck('toronto+raptors', this.assignGifs);
+					break;
+				
+				default:
+					console.log('gosh, don\'t you just love giphy?');
 			}
 		},
 	},
@@ -77,6 +84,5 @@ export default {
 		}
 	}
 }
-
 
 </style>
